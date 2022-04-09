@@ -1,0 +1,70 @@
+i{
+    position: relative;
+    box-sizing: border-box;
+    display: inline-block;
+    vertical-align: middle;
+}
+.location{
+    background-image: url('../images/location.svg');
+    width: 20px;
+    height: 20px;
+    &._large{
+        background-image: url('../images/location-large.svg');
+        width: 24px;
+        height: 31px;
+    }
+   
+}
+.mail{
+    background-image: url('../images/mail.svg');
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+    &._large{
+        background-image: url('../images/mail-large.svg');
+        width: 32px;
+        height: 26px;
+        margin: 0;
+    }
+}
+
+.phone{
+    background-image: url('../images/smartfone.svg');
+    width: 22px;
+    height: 22px;
+    margin-right: 2px;
+    &._large{
+        background-image: url('../images/phone-large.svg');
+        width: 22px;
+        height: 32px;
+        margin: 0;
+    }
+}
+.time{
+    background-image: url('../images/time.svg');
+    width: 36px;
+    height: 36px;
+}
+
+.icon-cert{
+    background-image: url('../images/certificat.svg');
+    width: 47px;
+    height: 42px;
+}
+.icon-contract{
+    background-image: url('../images/contract.svg');
+    width: 31px;
+    height: 51px;
+}
+.icon-waranty{
+    background-image: url('../images/warranty.svg');
+    width: 42px;
+    height: 47px;
+}
+.star{
+    background-image: url('../images/star.svg');
+    width: 14px;
+    height: 14px;
+    margin-right: 5px;
+    margin-top: -2px;
+}

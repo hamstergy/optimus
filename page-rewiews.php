@@ -17,7 +17,7 @@ get_header();
                 <div class="cover-container">
                   <?php the_title('<h1 class="c-title">', '</h1>'); ?>
                     <div class="c-text"><?php the_content(); ?></div>
-                      <a href="#" class="btn btn-link open-popup-link" data-mfp-src="#popup" >Request Service</a>
+                      <a href="#review-block" class="btn btn-link">Leave a Review</a>
                 </div>
             </div>
         </div>
@@ -68,7 +68,7 @@ get_header();
     </section> <!-- end about -->
 
     <section class="contact_us">
-        <div class="container">
+        <div class="container" id="review-block">
             <div class="frm-content">
               <<?php the_field('tag'); ?> class="section-title"><?php the_field('form_title'); ?></<?php the_field('tag'); ?>>
                 <form method="post" class="fprm-grid" id="rewiew-post">

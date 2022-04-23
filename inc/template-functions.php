@@ -824,7 +824,7 @@ if ( $method === 'POST' ) {
 
 	$project_name = 'Request Service';
 	$admin_email  = get_bloginfo('admin_email');
-	$mailtp = 'noreply@atlas.e-dev.pp.ua';
+	$mailtp = 'optimusapplianceseo@gmail.com';
 	$form_subject = 'Request Service';
 	
 	foreach ( $_POST as $key => $value ) {

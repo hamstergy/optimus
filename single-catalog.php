@@ -280,8 +280,12 @@ if($location ): ?>
 <div class="place-item">
     <?php if (get_sub_field('custom_link')): ?>
          <a href="<?php the_sub_field('custom_link'); ?>" rel="nofollow"><i class="location"></i><?php the_sub_field('nazvanie_rajona'); ?></a>
-     <?php elseif (get_sub_field('link_place')) : ?>
-             <a href="<?php the_sub_field('link_place'); ?>" rel="nofollow"><i class="location"></i><?php the_sub_field('nazvanie_rajona'); ?></a>
+     <?php elseif (get_sub_field('link_place')) : 
+        $rajon_url_arr = explode("/", get_sub_field('link_place')); 
+        end($rajon_url_arr);
+        $slug = prev($rajon_url_arr);
+        ?>
+             <a href="<?php echo get_permalink().$slug; ?>" rel="nofollow"><i class="location"></i><?php the_sub_field('nazvanie_rajona'); ?></a>
         <?php else: ?>
              <a rel="nofollow"><i class="location"></i><?php the_sub_field('nazvanie_rajona'); ?></a>
     <?php endif ?>

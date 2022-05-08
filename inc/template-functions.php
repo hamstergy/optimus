@@ -325,6 +325,13 @@ function catalog_post_pro() {
 			'redirect'		=> false
 		));
 
+		acf_add_options_page(array(
+			'page_title' 	=> 'Type Area Settings',
+			'menu_title'	=> 'Type-Area',
+			'menu_slug' 	=> 'type-area-settings',
+			'capability'	=> 'edit_posts',
+			'redirect'		=> false
+		));
 
 	}
 
@@ -901,3 +908,56 @@ function filter_product_wpseo_title($title) {
         $title = "$title - $blog_title";
     return $title;
 }
+
+function custom_rewrite_rule_location_type() {
+	add_rewrite_rule('appliance-repair/([^/]+)/([^/]+)/?$',
+	  'index.php?type=$matches[1]&location=$matches[2]',
+	  'top');
+}
+add_action('init', 'custom_rewrite_rule_location_type');
+
+add_filter( 'query_vars', 'wp_custom_query_vars' );
+function wp_custom_query_vars( $query_vars ){
+    $query_vars[] = 'location';
+    $query_vars[] = 'type';
+    return $query_vars;
+}
+
+add_action('template_include', function($template){
+	if (get_query_var('location') !== false && 
+		get_query_var('location') !== '' &&
+		get_query_var('type') !== false && 
+		get_query_var('type') !== '') {
+		
+		// вытаскиваю массив всех постов с типом location
+		$location_posts = get_posts([
+			'post_type' => 'location',
+			'post_status' => 'publish',
+			'numberposts' => -1
+		]);
+
+		//оставляю только slug -> пример 'pacific-beach'
+		$locations = array_map(function($location) {
+			return $location->post_name;
+		}, $location_posts);
+		
+		// вытаскиваю массив всех постов с типом catalog
+		$catalog_posts = get_posts([
+			'post_type' => 'catalog',
+			'post_status' => 'publish',
+			'numberposts' => -1
+		]);
+
+		//оставляю только slug -> пример 'refrigerator-repair'
+		$types = array_map(function($post) {
+			return $post->post_name;
+		}, $catalog_posts);
+
+		//проверяю те которые в URL совпадают с теми которые в массивах, если да, возвращаю новый тип шаблон
+		if (in_array(get_query_var('location'), $locations) && in_array(get_query_var('type'), $types)) {
+			return get_template_directory() . '/single-type-area.php';
+		}
+		return $template;
+	}
+	return $template;
+});

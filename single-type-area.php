@@ -8,6 +8,9 @@
  */
 
 get_header();
+
+// update_post_meta($post_ID,'_yoast_wpseo_meta-robots-noindex', '2');
+
 $location = get_query_var('location');
 $type = get_query_var('type');
 

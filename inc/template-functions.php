@@ -923,41 +923,122 @@ function wp_custom_query_vars( $query_vars ){
     return $query_vars;
 }
 
+function isTypeLocationPage() {
+	// вытаскиваю массив всех постов с типом location
+	$location_posts = get_posts([
+		'post_type' => 'location',
+		'post_status' => 'publish',
+		'numberposts' => -1
+	]);
+
+	//оставляю только slug -> пример 'pacific-beach'
+	$locations = array_map(function($location) {
+		return $location->post_name;
+	}, $location_posts);
+	
+	// вытаскиваю массив всех постов с типом catalog
+	$catalog_posts = get_posts([
+		'post_type' => 'catalog',
+		'post_status' => 'publish',
+		'numberposts' => -1
+	]);
+
+	//оставляю только slug -> пример 'refrigerator-repair'
+	$types = array_map(function($post) {
+		return $post->post_name;
+	}, $catalog_posts);
+
+	if (in_array(get_query_var('location'), $locations) && in_array(get_query_var('type'), $types)) {
+		return TRUE;
+	}
+	return FALSE;
+}
+
 add_action('template_include', function($template){
 	if (get_query_var('location') !== false && 
 		get_query_var('location') !== '' &&
 		get_query_var('type') !== false && 
 		get_query_var('type') !== '') {
-		
-		// вытаскиваю массив всех постов с типом location
-		$location_posts = get_posts([
-			'post_type' => 'location',
-			'post_status' => 'publish',
-			'numberposts' => -1
-		]);
-
-		//оставляю только slug -> пример 'pacific-beach'
-		$locations = array_map(function($location) {
-			return $location->post_name;
-		}, $location_posts);
-		
-		// вытаскиваю массив всех постов с типом catalog
-		$catalog_posts = get_posts([
-			'post_type' => 'catalog',
-			'post_status' => 'publish',
-			'numberposts' => -1
-		]);
-
-		//оставляю только slug -> пример 'refrigerator-repair'
-		$types = array_map(function($post) {
-			return $post->post_name;
-		}, $catalog_posts);
-
+	
 		//проверяю те которые в URL совпадают с теми которые в массивах, если да, возвращаю новый тип шаблон
-		if (in_array(get_query_var('location'), $locations) && in_array(get_query_var('type'), $types)) {
+		if (isTypeLocationPage()) {
 			return get_template_directory() . '/single-type-area.php';
 		}
 		return $template;
 	}
 	return $template;
 });
+
+function getSeoData() {
+	$location = get_query_var('location');
+	$type = get_query_var('type');
+
+	// вытаскиваю пост с типом location и где slug = $location
+	$location_post = get_posts([
+		'name' => $location,
+		'post_type' => 'location',
+		'post_status' => 'publish',
+		'numberposts' => 1
+	])[0];
+
+	// вытаскиваю пост с типом catalog и где slug = $type
+	$catalog_post = get_posts([
+		'name' => $type,
+		'post_type' => 'catalog',
+		'post_status' => 'publish',
+		'numberposts' => 1
+	])[0];
+
+	return [
+		'location' => $location_post->post_title,
+		'type' => $catalog_post->post_title
+	];
+}
+
+add_filter('wpseo_metadesc','custom_meta');
+function custom_meta( $desc ){
+    if (isTypeLocationPage()) {
+        $desc = "If you are looking for ".getSeoData()['type']." in ".getSeoData()['location']." area and want it to be fast and of due quality – call us";
+    } 
+    return $desc;
+}
+
+add_filter('wpseo_metadesc','custom_opengraph_meta');
+function custom_opengraph_meta( $desc ){
+    if (isTypeLocationPage()) {
+        $desc = "If you are looking for ".getSeoData()['type']." in ".getSeoData()['location']." area and want it to be fast and of due quality – call us";
+    } 
+    return $desc;
+}
+
+add_filter( 'wpseo_canonical', 'custom_canonical' );
+function custom_canonical( $canonical ) {
+	if (isTypeLocationPage()) {
+	  $canonical = get_site_url().'/appliance-repair/'.get_query_var('type').'/'.get_query_var('location').'/';
+	}
+  	return $canonical;
+}
+
+add_filter( 'wpseo_opengraph_url', 'custom_opengraph_url' );
+function custom_opengraph_url( $wpseo_frontend ) {
+	if (isTypeLocationPage()) {
+	  $wpseo_frontend = get_site_url().'/appliance-repair/'.get_query_var('type').'/'.get_query_var('location').'/';
+	}
+  	return $wpseo_frontend;
+}
+
+add_filter('wpseo_opengraph_title','custom_opengraph_title');
+function custom_opengraph_title( $title ){
+	if (isTypeLocationPage()) {
+        $title = getSeoData()['type']." in ".getSeoData()['location']." - Optimus Appliance & HVAC Inc";
+    } 
+    return $title;
+}
+
+add_filter('wpseo_title','custom_title');
+function custom_title( $title ){
+	if (isTypeLocationPage()) {
+        $title = getSeoData()['type']." in ".getSeoData()['location']." - Optimus Appliance & HVAC Inc";
+    } 
+    return $title;
+}

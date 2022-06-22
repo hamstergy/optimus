@@ -1003,7 +1003,7 @@ function custom_meta( $desc ){
     return $desc;
 }
 
-add_filter('wpseo_metadesc','custom_opengraph_meta');
+add_filter('wpseo_opengraph_desc','custom_opengraph_meta');
 function custom_opengraph_meta( $desc ){
     if (isTypeLocationPage()) {
         $desc = "If you are looking for ".getSeoData()['type']." in ".getSeoData()['location']." area and want it to be fast and of due quality – call us";

@@ -1,0 +1,497 @@
+<?php
+/**
+ * Template name:Homepage
+ *
+ * @link https://developer.wordpress.org/themes/basics/template-hierarchy/
+ *
+ * @package atlas
+ */
+
+get_header();
+?>
+<main>
+	<?php if( have_rows('add_slider') ): ?>
+<div class="top-banner">
+<div class="banner-wrap">
+    <div class="swiper main-slider">
+        <div class="swiper-wrapper">
+					<?php while( have_rows('add_slider') ): the_row();  ?>
+            <!-- start -->
+<div class="swiper-slide" style="background-image: url('<?php the_sub_field('cover'); ?>">
+    <div class="container">
+        <div class="slider-content">
+            <div class="banner-content">
+                <<?php the_sub_field('title_tag'); ?> class="banner-title"><?php the_sub_field('slider_title'); ?></<?php the_sub_field('title_tag'); ?>>
+                <div class="banner-text"><?php the_sub_field('kratkoe_opisanie'); ?></div>
+              <a href="#" class="btn btn-link open-popup-link" data-mfp-src="#popup" >Request Service</a>
+            </div>
+        </div>
+    </div>
+
+</div>
+        <!-- end -->
+			<?php endwhile; ?>
+        </div>
+        <div class="swiper-pagination"></div>
+    </div>
+</div>
+<div class="slider-nav">
+    <div class="nav-prev"></div>
+    <div class="nav-next"></div>
+</div>
+</div>
+<?php endif; ?>
+<?php if( have_rows('dobavit_blok') ): ?>
+<div class="premi-block">
+    <div class="container">
+        <div class="premi-row">
+					<?php while( have_rows('dobavit_blok') ): the_row();  ?>
+            <!-- start -->
+            <div class="premi-list">
+                <div class="prem-icon">
+                <img src="<?php the_sub_field('ikonka'); ?>" alt="">
+                </div>
+                <div class="premi-data">
+                    <<?php the_sub_field('title_tag'); ?> class="title"><?php the_sub_field('title'); ?></<?php the_sub_field('title_tag'); ?>>
+                    <div class="text"><?php the_sub_field('kratkoe_opisanie'); ?></div>
+                </div>
+            </div>
+            <!-- end -->
+						<?php endwhile; ?>
+        </div>
+    </div>
+</div> <!-- end-premi -->
+<?php endif; ?>
+<?php if ( get_the_content() ) { ?>
+<section class="seo-block">
+    <div class="container">
+        <div class="seo-block-content">
+          <?php the_content(); ?>
+        </div>
+    </div>
+</section> <!-- end seo -->
+<?php } ?>
+<?php
+$featured_posts = get_field('tehnika');
+if( $featured_posts ): ?>
+<section class="product-block">
+    <div class="container">
+        <div class="product-wrapper">
+            <<?php the_field('tag_t'); ?> class="section-title"><?php the_field('t_title'); ?></<?php the_field('tag_t'); ?>>
+            <<?php the_field('tag_s'); ?> class="section-subtitle"><?php the_field('s_title'); ?></<?php the_field('tag_s'); ?>>
+
+            <div class="product-row">
+
+							<?php foreach( $featured_posts as $post ):
+
+							// Setup this post for WP functions (variable must be named $post).
+							setup_postdata($post); ?>
+<!-- start -->
+<div class="product-item 	<?php if (get_field('npd')) : ?>_npd <?php endif; ?>">
+    <div class="pr-content">
+        <a href="<?php the_permalink(); ?>">
+            <div class="pr-cover">
+        <img src="<?php echo get_the_post_thumbnail_url(); ?>" alt="<?php the_title(); ?>">
+            </div>
+        </a>
+    </div>
+    <a class="pr-title" href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
+</div>
+<!-- end -->
+<?php endforeach; ?>
+<!-- start -->
+<div class="product-item _pd">
+    <div class="pr-content">
+       <div class="pr-full">
+           <div class="pd-title">Request Service</div>
+           <div class="pd-text">Schedule an appointment or request an estimate</div>
+           <div class="btn-group">
+               <a class="btn btn-link-pr open-popup-link" data-mfp-src="#popup">Send Request</a>
+           </div>
+       </div>
+    </div>
+</div>
+<!-- end -->
+            </div>
+        </div>
+    </div>
+</section> <!-- end product -->
+<?php
+// Reset the global post object so that the rest of the page works correctly.
+wp_reset_postdata(); ?>
+<?php endif; ?>
+<?php
+$brands = get_field('vybrat_brendy');
+if( $brands ): ?>
+<section class="brands-slider">
+    <div class="container ">
+        <<?php the_field('tag_brand');?> class="section-title"><?php the_field('b_title');?></<?php the_field('tag_brand');?>>
+        <div class="brand-wrap">
+            <div class="swiper brands-init">
+                <div class="swiper-wrapper cart-row">
+									<?php foreach( $brands as $post ):
+									setup_postdata($post); ?>
+                    <!-- start -->
+                    <div class="swiper-slide">
+                        <div class="sl-item">
+													<a href="<?php the_permalink(); ?>"><img src="<?php the_field('brand_cover'); ?>" alt="<?php the_title();?>"></a>
+                        </div>
+                    </div>
+                    <!-- end -->
+										<?php endforeach; ?>
+                </div>
+
+            </div>
+            <div class="slider-nav">
+                <div class="nav-prev" id="brend-prev"></div>
+                <div class="nav-next" id="brend-next"></div>
+            </div>
+						<?php if (get_field('brendlink',get_option( 'page_on_front' ))) : ?>
+            <div class="btn-group">
+                <a href="<?php the_field('brendlink',get_option( 'page_on_front' )); ?>" class="btn btn-primary">See all Brands</a>
+            </div>
+					<?php endif; ?>
+        </div>
+
+    </div>
+</section> <!-- end brand slider -->
+<?php wp_reset_postdata(); endif; ?>
+<?php if( have_rows('dobavit_work') ): ?>
+<section class="we-work">
+    <div class="container">
+        <<?php the_field('work_tag'); ?> class="section-title"><?php the_field('w_title'); ?></<?php the_field('work_tag'); ?>>
+        <div class="we-work-steps">
+					<?php while( have_rows('dobavit_work') ): the_row(); ?>
+<!-- start -->
+<div class="steps-item">
+    <div class="step-content">
+        <div class="step-icon"></div>
+        <<?php the_sub_field('title_tag'); ?> class="title"><?php the_sub_field('title'); ?></<?php the_sub_field('title_tag'); ?>>
+        <div class="text"><?php the_sub_field('opisanie'); ?></div>
+    </div>
+
+</div>
+<!-- end -->
+<?php endwhile; ?>
+        </div>
+    </div>
+</section> <!-- end we wrk -->
+<?php endif; ?>
+<?php if (get_field('z_cover', get_option( 'page_on_front' ))) : ?>
+<section class="form_bg"  style="background-image: url('<?php the_field('z_cover', get_option( 'page_on_front' )); ?>">
+<div class="container">
+    <div class="frb-content">
+        <<?php the_field('z_tag', get_option( 'page_on_front' )); ?> class="section-title"><?php the_field('z_title', get_option( 'page_on_front' )); ?></<?php the_field('z_tag', get_option( 'page_on_front' )); ?>>
+        <div class="btn-group">
+					  <a href="#" class="btn btn-link open-popup-link" data-mfp-src="#popup" >Request Service</a>
+        </div>
+    </div>
+
+</div>
+</section> <!-- end frm -->
+<?php endif; ?>
+<?php if (get_field('ab_text')) : ?>
+<section class="about_us">
+    <div class="container">
+        <div class="ab_wrap">
+            <div class="ab-col">
+                <<?php the_field('ab_tag'); ?> class="section-title"><?php the_field('ab_title'); ?></<?php the_field('ab_tag'); ?>>
+                <div class="ab-subtitle"><?php the_field('ab_subtitle'); ?></div>
+                <div class="ab-text"><?php the_field('ab_text'); ?></div>
+                     <div class="btn-group">
+                         <a href="<?php the_field('page_link'); ?>" class="btn btn-primary"><?php the_field('btn_name'); ?></a>
+                     </div>
+            </div>
+						<?php if (get_field('kartinka')) : ?>
+            <div class="ab-cover">
+                <div class="cover-bg">
+<img src="<?php the_field('kartinka') ?>" alt="">
+                </div>
+            </div>
+					<?php endif; ?>
+        </div>
+    </div>
+</section> <!-- end about -->
+<?php endif; ?>
+<?php if( have_rows('team_group',get_option( 'page_on_front' )) ): ?>
+<section class="team">
+    <div class="container">
+        <<?php the_field('team_tag', get_option( 'page_on_front' )); ?> class="section-title"><?php the_field('team_title', get_option( 'page_on_front' )); ?></<?php the_field('team_tag', get_option( 'page_on_front' )); ?>>
+        <div class="team-wrap">
+					<?php while( have_rows('team_group', get_option( 'page_on_front' )) ): the_row(); ?>
+            <!-- start -->
+            <div class="tem-item">
+                <div class="tm-content">
+                        <div class="user-cover">
+                            <img src="<?php the_sub_field('avatar', get_option( 'page_on_front' )); ?>" alt="<?php the_sub_field('name', get_option( 'page_on_front' )); ?>">
+                        </div>
+                   <div class="user-name"><?php the_sub_field('name', get_option( 'page_on_front' )); ?></div>
+                   <div class="lever"><?php the_sub_field('posada', get_option( 'page_on_front' )); ?></div>
+                   <div class="y-work"><i class="star"></i><?php the_sub_field('opyt_raboty', get_option( 'page_on_front' )); ?></div>
+                </div>
+            </div>
+            <!-- end -->
+					<?php endwhile; ?>
+        </div>
+    </div>
+</section> <!-- end team -->
+<?php endif; ?>
+<?php
+$location = get_field('select_location');
+if($location ): ?>
+<section class="place-area">
+    <div class="container">
+        <<?php the_field('loc_tag'); ?> class="section-title"><?php the_field('loc_title'); ?></<?php the_field('loc_tag'); ?>>
+        <div class="place-row">
+					<?php foreach( $location as $post ):
+					setup_postdata($post); ?>
+<!-- start -->
+<div class="place-item">
+    <a href="<?php the_permalink(); ?>" rel="nofollow"><i class="location"></i><?php the_title(); ?></a>
+</div>
+<!-- end -->
+<?php endforeach; ?>
+        </div>
+    </div>
+</section> <!-- end area -->
+<?php else: ?>
+    <?php if ( have_rows('select_list') ) : ?>
+   <section class="place-area">
+    <div class="container">
+        <<?php the_field('loc_tag'); ?> class="section-title"><?php the_field('loc_title'); ?></<?php the_field('loc_tag'); ?>>
+        <div class="place-row">
+                   <?php while( have_rows('select_list') ): the_row();?>
+<!-- start -->
+<div class="place-item">
+    <?php if (get_sub_field('custom_link')): ?>
+         <a href="<?php the_sub_field('custom_link'); ?>" rel="nofollow"><i class="location"></i><?php the_sub_field('nazvanie_rajona'); ?></a>
+     <?php elseif (get_sub_field('link_place')) : ?>
+             <a href="<?php the_sub_field('link_place'); ?>" rel="nofollow"><i class="location"></i><?php the_sub_field('nazvanie_rajona'); ?></a>
+        <?php else: ?>
+             <a rel="nofollow"><i class="location"></i><?php the_sub_field('nazvanie_rajona'); ?></a>
+    <?php endif ?>
+</div>
+<!-- end -->
+<?php endwhile; ?>
+        </div>
+    </div>
+</section> <!-- end area -->
+<?php endif; ?>
+<?php endif; ?>
+<?php
+wp_reset_postdata(); ?>
+
+<?php if (get_field('war_tag', get_option( 'page_on_front' ))) : ?>
+<section class="form_bg atlasrepair" style="background-image: url(<?php the_field('war_cover', get_option( 'page_on_front' )); ?>);">
+    <div class="container">
+        <div class="frb-content">
+            <<?php the_field('war_tag', get_option( 'page_on_front' )); ?> class="section-title"><?php the_field('war_title', get_option( 'page_on_front' )); ?></<?php the_field('war_tag', get_option( 'page_on_front' )); ?>>
+            <div class="btn-group">
+                  <a href="#" class="btn btn-link open-popup-link" data-mfp-src="#popup" >Request Service</a>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- end atlas -->
+<?php endif; ?>
+<?php
+$args = array(
+	'posts_per_page' => get_field('rew_count'),
+	'post_type' => 'rewiew'
+);
+$query = new WP_Query( $args ); ?>
+
+<?php if ( $query->have_posts() ) : ?>
+
+<section class="rewiews">
+    <div class="container">
+        <<?php the_field('rew_tag'); ?> class="section-title"><?php the_field('rew_title'); ?></<?php the_field('rew_tag'); ?>>
+        <?php if( have_rows('rew_wiget', get_option( 'page_on_front' )) ): ?>
+        <div class="rew-wigets">
+            <?php while( have_rows('rew_wiget', get_option( 'page_on_front' )) ): the_row(); ?>
+            <!-- start -->
+            <div class="wg-item">
+                <a href="<?php the_sub_field('cat_link', get_option( 'page_on_front' )); ?>" rel="nofollow" target="_blank">
+                <div class="wh-cnt">
+                           <img src="<?php the_sub_field('zagruzit_kartinku', get_option( 'page_on_front' )); ?>" alt=""> 
+                </div>
+            </a>
+            </div>
+            <!-- end -->
+        <?php endwhile; ?>
+        </div>
+    <?php endif; ?>
+    </div>
+    <div class="rewiew-slider">
+        <div class="container-fluid">
+            <div class="swiper rew-slider">
+                <div class="swiper-wrapper">
+                  	<?php while ( $query->have_posts() ) : $query->the_post(); ?>
+                             <!-- start -->
+                             <div class="swiper-slide">
+                                <div class="rewiew-content">
+                                    <div class="rew-text"><?php the_content(); ?></div>
+                                    <div class="rew-autor"><?php the_title(); ?></div>
+                                </div>
+                            </div>
+                            <!-- end -->
+													<?php endwhile; ?>
+													<?php wp_reset_postdata(); ?>
+                </div>
+                <div class="slider-nav">
+                    <div class="nav-prev" id="n-prev"></div>
+                    <div class="nav-next" id="n-next"></div>
+                </div>
+								<?php if (get_field('rew_link', get_option( 'page_on_front' ))) : ?>
+                <div class="btn-group">
+                    <a href="<?php the_field('rew_link', get_option( 'page_on_front' )); ?>" class="btn btn-primary"><?php the_field('rew_name'); ?></a>
+                </div>
+							<?php endif; ?>
+            </div>
+        </div>
+    </div><!-- rew end -->
+    </section>
+	<?php endif; ?>
+		<?php
+		$args = array(
+			'posts_per_page' => get_field('count'),
+			'post_type' => 'post'
+		);
+$query = new WP_Query( $args ); ?>
+
+<?php if ( $query->have_posts() ) : ?>
+    <section class="article-area">
+        <div class="container">
+            <<?php the_field('art_tag'); ?> class="section-title"><?php the_field('art_title'); ?></<?php the_field('art_tag'); ?>>
+            <div class="news-block">
+                <div class="swiper news-init">
+                    <div class="swiper-wrapper">
+											<?php while ( $query->have_posts() ) : $query->the_post(); ?>
+                        <!-- start -->
+                        <div class="swiper-slide">
+                            <div class="news-item">
+                                <div class="news-cover">
+                                    <a href="<?php the_permalink(); ?>"> <img src="<?php echo get_the_post_thumbnail_url(); ?>" alt="<?php the_title(); ?>"></a>
+                                </div>
+                                <div class="news-data">
+                                    <div class="news-date"><?php the_time('M.d,Y'); ?></div>
+                                    <a href="<?php the_permalink(); ?>" class="title"><?php the_title(); ?></a>
+                                    <div class="news-text"><?php the_excerpt(); ?></div>
+                                    <div class="btn-group">
+                                        <a href="<?php the_permalink(); ?>" class="btn btn-read">Read</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end -->
+                      <?php endwhile; ?>
+                    </div>
+                </div>
+								<?php wp_reset_postdata(); ?>
+                <div class="slider-nav">
+                    <div class="nav-prev" id="news_prev"></div>
+                    <div class="nav-next" id="news_next"></div>
+                </div>
+								<?php if (get_field('art_link')) : ?>
+
+                <div class="btn-group">
+                    <a href="<?php the_field('art_link'); ?>" class="btn btn-primary"><?php the_field('tekst_ssylki'); ?></a>
+                </div>
+							<?php endif; ?>
+            </div>
+        </div>
+    </section>
+	<?php else : ?>
+<p><?php esc_html_e( 'Нет постов по вашим критериям.' ); ?></p>
+<?php endif; ?>
+		<?php if (get_field('seo_blok')) : ?>
+    <section class="seo-block">
+        <div class="container">
+            <div class="seo-block-content">
+              <?php the_field('seo_blok'); ?>
+            </div>
+        </div>
+    </section> <!-- end seo -->
+	<?php endif; ?>
+    <section class="contact_us">
+        <div class="container">
+            <div class="frm-content">
+                <<?php the_field('tag_z', get_option( 'page_on_front' )); ?> class="section-title"><?php the_field('zagolovok_formy', get_option( 'page_on_front' )); ?></<?php the_field('tag_z', get_option( 'page_on_front' )); ?>>
+                <form action="" class="fprm-grid" id="formsend">
+                     <input type="hidden" name="Пришел со страницы" value="<?php the_title(); ?>">
+<div class="input-row">
+    <div class="input-group">
+        <input type="text" class="text-field" name="Name" placeholder="Your name *" required>
+    </div>
+    <div class="input-group">
+        <input type="text" class="text-field" name="Email" placeholder="Email *">
+    </div>
+    <div class="input-group">
+        <input type="text" class="text-field" name="Phone" placeholder="Phone number *" required>
+    </div>
+</div>
+<div class="text-group">
+    <textarea  class="text-field" name="Comment" placeholder="Your comment"></textarea>
+</div>
+<div class="btn-group">
+    <button type="submit" class="btn btn-link">Request Service</button>
+</div>
+                </form>
+            </div>
+        </div>
+    </section>
+    <!-- contact end -->
+    <section class="contact-block">
+        <div class="container">
+            <<?php the_field('tag', 'options'); ?> class="section-title"><?php the_field('c_title', 'options'); ?></<?php the_field('tag', 'options'); ?>>
+            <div class="contact-row">
+							<?php if (get_field('phone', 'options')) : ?>
+                <!-- start -->
+                <div class="cnt-item">
+                    <div class="cnt-content">
+                        <div class="cnt-icon"><i class="phone _large"></i></div>
+                        <div class="cnt-r">
+                            <span>Phone number</span>
+                            <a href="tel:<?php echo str_replace('', '', get_field('phone', 'option')); ?>"><?php the_field('phone', 'options'); ?></a>
+                        </div>
+                    </div>
+                </div>
+                <!-- end -->
+							<?php endif; ?>
+								<?php if (get_field('phone', 'options')) : ?>
+                 <!-- start -->
+                 <div class="cnt-item">
+                    <div class="cnt-content">
+                        <div class="cnt-icon"><i class="mail _large"></i></div>
+                        <div class="cnt-r">
+                        <span>Email</span>
+                        <a href="mailto:<?php the_field('mail', 'options'); ?>"><?php the_field('mail', 'options'); ?></a>
+                    </div>
+                    </div>
+                </div>
+                <!-- end -->
+							<?php endif; ?>
+								<?php if (get_field('phone', 'options')) : ?>
+                <!-- start -->
+                <div class="cnt-item">
+                    <div class="cnt-content">
+                        <div class="cnt-icon"><i class="location _large"></i></div>
+                        <div class="cnt-r">
+                        <span>Address</span>
+                        <div class="adress"><?php the_field('location', 'options'); ?></div>
+                    </div>
+                    </div>
+                </div>
+                <!-- end -->
+							<?php endif; ?>
+            </div>
+        </div>
+    </section><!-- end contact items -->
+		<?php if (get_field('iframe_map', 'options')) : ?>
+    <section class="map-area">
+      <?php the_field('iframe_map', 'options') ?>
+    </section>
+<?php endif; ?>
+</main>
+<?php
+get_footer();

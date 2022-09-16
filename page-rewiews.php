@@ -36,9 +36,10 @@ get_header();
       <!-- start -->
       <div class="rew-list">
         <div class="rewiew-content">
-            <div class="rew-text">
-              <?php the_content(); ?>
-            </div>
+                <div class="rew-rating">
+                     <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                </div>
+            <div class="rew-text"><?php the_content(); ?></div>
             <div class="rew-autor"> <?php the_title(); ?></div>
         </div>
      </div>

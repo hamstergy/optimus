@@ -46,9 +46,9 @@ get_header();
 <section class="form_bg atlasrepair single-block">
     <div class="container">
         <div class="frb-content">
-            <<?php the_field('war_tag', get_option( 'page_on_front' )); ?> class="section-title"><?php the_field('war_title', get_option( 'page_on_front' )); ?></<?php the_field('war_tag', get_option( 'page_on_front' )); ?>>
+            <<?php the_field('war_tag', get_option( 'page_on_front' )); ?> class="section-titlest"><?php the_field('war_title', get_option( 'page_on_front' )); ?></<?php the_field('war_tag', get_option( 'page_on_front' )); ?>>
             <div class="btn-group">
-               <a href="#" class="btn btn-link open-popup-link" data-mfp-src="#popup" >Request Service</a>
+                  <a href="#" class="btn btn-link open-popup-link" data-mfp-src="#popup" >Request Service</a>
             </div>
         </div>
     </div>

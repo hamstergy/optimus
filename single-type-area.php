@@ -232,6 +232,9 @@ $query = new WP_Query( $args ); ?>
                              <!-- start -->
                              <div class="swiper-slide">
                                 <div class="rewiew-content">
+                                    <div class="rew-rating">
+                                        <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                                    </div>
                                     <div class="rew-text"><?php the_content(); ?></div>
                                     <div class="rew-autor"><?php the_title(); ?></div>
                                 </div>

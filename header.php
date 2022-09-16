@@ -47,55 +47,55 @@ s0.parentNode.insertBefore(s1,s0);
 <!--End of Tawk.to Script-->
 <?php wp_body_open(); ?>
 <header>
-<div class="top-line">
-    <div class="container">
-        <div class="header-contacts">
-            <div class="contact-left">
-                <ul>
-                    <li><i class="location"></i><?php the_field('location', 'options'); ?></li>
-                    <li><i class="mail"></i><a href="mailto:<?php the_field('mail', 'options'); ?>"><?php the_field('mail', 'options'); ?></a></li>
-                </ul>
-            </div>
-            <div class="contact-right">
-                <ul>
-                    <li><i class="phone"></i><a href="tel:<?php echo str_replace('', '', get_field('phone', 'option')); ?>"><?php the_field('phone', 'options'); ?></a></li>
-                </ul>
-                <div class="mobile-toogle">
-                    <a href="#" class="toggle-mnu"><span></span></a>
+    <div class="top-line">
+        <div class="container">
+            <div class="header-contacts">
+                <div class="contact-left">
+                    <ul>
+                        <li><i class="location"></i><?php the_field('location', 'options'); ?></li>
+                        <li><i class="mail"></i><a href="mailto:<?php the_field('mail', 'options'); ?>"><?php the_field('mail', 'options'); ?></a></li>
+                    </ul>
+                </div>
+                <div class="contact-right">
+                    <ul>
+                        <li><i class="phone"></i><a href="tel:<?php echo str_replace('', '', get_field('phone', 'option')); ?>"><?php the_field('phone', 'options'); ?></a></li>
+                    </ul>
+                    <div class="mobile-toogle">
+                        <a href="#" class="toggle-mnu"><span></span></a>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-<div class="header-primary">
-    <div class="container">
-        <div class="header-top">
-            <div class="logo-side">
-              <?php
-              the_custom_logo();
-              if ( is_front_page() && is_home() ) :
-                ?>
-<a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a>
-                <?php   endif;?>
-            </div>
-            <button class="service-item open-popup-link" data-mfp-src="#popup">Request Service</button>
-            <div class="menu-side">
-							<?php
-							wp_nav_menu(
-								array(
-									'theme_location' => 'menu-1',
-									'menu_id'        => 'primary-menu',
-									'items_wrap'      => '<ul id="%1$s" class="%2$s">%3$s</ul>',
-								)
-							);
-							?>
-  <div class="top-btn">
-                    <div class="group service-item">
-                        <a href="#" data-mfp-src="#popup" class="open-popup-link">Request Service</a>
+    <div class="header-primary">
+        <div class="container">
+            <div class="header-top">
+                <div class="logo-side">
+                <?php
+                the_custom_logo();
+                if ( is_front_page() && is_home() ) :
+                    ?>
+    <a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a>
+                    <?php   endif;?>
+                </div>
+                <button class="service-item open-popup-link" data-mfp-src="#popup">Request Service</button>
+                <div class="menu-side">
+                                <?php
+                                wp_nav_menu(
+                                    array(
+                                        'theme_location' => 'menu-1',
+                                        'menu_id'        => 'primary-menu',
+                                        'items_wrap'      => '<ul id="%1$s" class="%2$s">%3$s</ul>',
+                                    )
+                                );
+                                ?>
+    <div class="top-btn">
+                        <div class="group service-item">
+                            <a href="#" data-mfp-src="#popup" class="open-popup-link">Request Service</a>
+                        </div>
                     </div>
-                  </div>
+                </div>
             </div>
         </div>
     </div>
-</div>
 </header>
